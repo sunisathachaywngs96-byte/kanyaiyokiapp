@@ -1,1 +1,1 @@
-# kunyaiyogiapp
+# kunyaiyogi
