@@ -1,1 +1,373 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>คุณนายโยคิ – ทำนายไพ่ทาโรต์</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Sarabun:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#b8922a;--gl:#f0d060;--gd:#6b520e;
+  --bg:#070309;--dk:#100616;--wine:#3b0c1a;--crim:#6a1525;
+  --plum:#220a35;
+  --f1:'Cinzel Decorative',serif;
+  --f2:'Sarabun',sans-serif;
+  --f3:'Libre Baskerville',serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--f2);background:var(--bg);color:#e8d5b0;min-height:100vh;overflow-x:hidden}
 
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 50% 40% at 50% 0%,rgba(106,21,37,.22) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 30% at 0% 100%,rgba(34,10,53,.28) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 30% at 100% 100%,rgba(10,32,48,.22) 0%,transparent 60%);
+}
+
+/* STARS */
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.s{position:absolute;border-radius:50%;background:rgba(255,255,210,.75);
+  animation:tw var(--d,3s) var(--dl,0s) ease-in-out infinite alternate}
+@keyframes tw{0%{opacity:.1}100%{opacity:.9}}
+
+/* CANDLE */
+.candle{position:fixed;pointer-events:none;z-index:1;width:200px;height:250px;border-radius:50%;filter:blur(45px);animation:flic 3.2s ease-in-out infinite alternate}
+.cl{bottom:-70px;left:-50px;background:rgba(200,100,20,.12)}
+.cr2{bottom:-70px;right:-50px;background:rgba(200,80,10,.10)}
+@keyframes flic{0%{opacity:.55;transform:scale(1)}50%{opacity:.88;transform:scale(1.07)}100%{opacity:.65;transform:scale(.95)}}
+
+/* HEADER */
+header{position:relative;z-index:10;text-align:center;padding:50px 20px 28px;border-bottom:1px solid rgba(184,146,42,.14)}
+.hgems{font-size:18px;letter-spacing:16px;color:var(--g);opacity:.5;margin-bottom:8px}
+.htitle{
+  font-family:var(--f1);font-size:clamp(26px,6vw,60px);font-weight:900;
+  background:linear-gradient(160deg,#6b520e 0%,#b8922a 25%,#f0d060 50%,#b8922a 75%,#6b520e 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:3px;line-height:1.15;
+}
+.hsub{font-family:var(--f3);font-style:italic;color:rgba(184,146,42,.58);font-size:clamp(11px,2vw,14px);letter-spacing:4px;margin-top:8px}
+.hline-wrap{margin-top:18px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.hline-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#06C755;color:#fff;border:none;padding:10px 22px;border-radius:50px;font-size:14px;
+  font-family:var(--f2);font-weight:700;cursor:pointer;text-decoration:none;transition:all .28s;
+  box-shadow:0 4px 16px rgba(6,199,85,.3);
+}
+.hline-btn:hover{background:#05b04c;transform:scale(1.04);box-shadow:0 6px 22px rgba(6,199,85,.45)}
+
+/* MAIN */
+main{position:relative;z-index:5;max-width:940px;margin:0 auto;padding:36px 16px 100px}
+
+/* SCREEN */
+.sc{display:none;animation:scIn .45s ease}
+.sc.on{display:block}
+@keyframes scIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* PANEL */
+.box{
+  background:linear-gradient(145deg,rgba(16,6,22,.97) 0%,rgba(34,10,53,.65) 100%);
+  border:1px solid rgba(184,146,42,.2);border-radius:6px;
+  padding:clamp(20px,4vw,40px) clamp(16px,4vw,36px);
+  position:relative;overflow:hidden;margin-bottom:20px;
+}
+.box::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(55deg,transparent,transparent 50px,rgba(184,146,42,.018) 50px,rgba(184,146,42,.018) 51px)}
+.cx{position:absolute;color:var(--g);opacity:.25;font-size:12px}
+.cx.tl{top:10px;left:14px}.cx.tr{top:10px;right:14px}
+.cx.bl{bottom:10px;left:14px}.cx.br{bottom:10px;right:14px}
+
+/* HEADINGS */
+.ptitle{font-family:var(--f1);font-size:clamp(15px,3vw,22px);color:var(--gl);text-align:center;margin-bottom:6px}
+.psub{text-align:center;color:rgba(232,213,176,.48);font-size:13px;margin-bottom:26px;font-style:italic;letter-spacing:.4px}
+.orn{display:flex;align-items:center;gap:10px;margin:20px 0;color:rgba(184,146,42,.28);font-size:11px}
+.orn::before,.orn::after{content:'';flex:1;height:1px;background:rgba(184,146,42,.16)}
+
+/* Q TYPE */
+.qg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.qb{padding:13px 8px;border:1px solid rgba(184,146,42,.22);background:rgba(106,21,37,.14);border-radius:5px;color:#e8d5b0;font-family:var(--f2);font-size:13px;cursor:pointer;text-align:center;transition:all .26s;line-height:1.4}
+.qb .qi{font-size:20px;display:block;margin-bottom:5px}
+.qb:hover,.qb.on{border-color:var(--g);background:rgba(184,146,42,.13);color:var(--gl);box-shadow:0 0 14px rgba(184,146,42,.18)}
+
+/* TEXTAREA */
+.qin{width:100%;background:rgba(7,3,9,.88);border:1px solid rgba(184,146,42,.25);border-radius:4px;color:#e8d5b0;font-family:var(--f2);font-size:15px;padding:14px 16px;resize:vertical;min-height:88px;outline:none;transition:border-color .28s;line-height:1.75}
+.qin:focus{border-color:var(--g)}
+.qin::placeholder{color:rgba(232,213,176,.25)}
+
+/* SPREAD */
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:4px}
+.sb{padding:16px 10px;border:1px solid rgba(184,146,42,.22);background:rgba(34,10,53,.25);border-radius:5px;color:#e8d5b0;font-family:var(--f2);font-size:13px;cursor:pointer;text-align:center;transition:all .26s}
+.sb:hover,.sb.on{border-color:var(--g);background:rgba(184,146,42,.12);color:var(--gl)}
+.sb .sn{font-size:15px;font-weight:700;margin-bottom:4px}
+.sb .sc2{font-size:11px;color:rgba(232,213,176,.45)}
+
+/* BUTTONS */
+.brow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.btn{padding:12px 26px;border:1px solid var(--g);background:rgba(184,146,42,.1);color:var(--gl);font-family:var(--f2);font-size:15px;font-weight:600;border-radius:3px;cursor:pointer;transition:all .26s;letter-spacing:.4px}
+.btn:hover{background:rgba(184,146,42,.22);box-shadow:0 0 16px rgba(184,146,42,.25);transform:translateY(-2px)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-r{background:linear-gradient(135deg,var(--crim) 0%,#8a1620 100%);border-color:var(--g)}
+.btn-r:hover{background:linear-gradient(135deg,#8a1620 0%,var(--crim) 100%)}
+.btn-g{background:linear-gradient(135deg,#1a5c35 0%,#0d3a22 100%);border-color:#4caf82;color:#a8f0c8;text-decoration:none;display:inline-flex;align-items:center}
+.btn-g:hover{background:linear-gradient(135deg,#0d3a22 0%,#1a5c35 100%)}
+
+/* CARDS */
+.cards-row{display:flex;gap:clamp(8px,2vw,18px);justify-content:center;flex-wrap:wrap;margin:26px 0 14px}
+.tc{width:clamp(68px,11vw,90px);flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+.tc-pos{font-size:10px;color:var(--g);text-align:center;font-weight:700;min-height:15px;letter-spacing:.3px}
+.tc-body{width:100%;height:clamp(110px,17vw,145px);border-radius:7px;border:2px solid rgba(184,146,42,.3);position:relative;perspective:700px;cursor:pointer;transition:transform .22s}
+.tc-body:hover{transform:translateY(-8px) rotate(-1deg)}
+.tc-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.4,0,.2,1);border-radius:6px}
+.tc-body.flipped .tc-inner{transform:rotateY(180deg)}
+.cf,.cb{position:absolute;inset:0;border-radius:6px;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.cb{background:linear-gradient(140deg,#280a1c 0%,#1a0b2e 100%);border:1px solid rgba(184,146,42,.28)}
+.cb-pat{font-size:clamp(18px,3.5vw,26px);opacity:.4;line-height:1.7;user-select:none;text-align:center}
+.cf{background:linear-gradient(165deg,#1c0d28 0%,#080e1c 100%);border:1px solid var(--g);transform:rotateY(180deg);padding:5px;gap:4px;overflow:hidden}
+.cf .em{font-size:clamp(18px,3.5vw,26px)}
+.cf .cn{font-size:clamp(6px,1.1vw,9px);color:var(--gl);text-align:center;line-height:1.3}
+.cf .cn2{font-size:clamp(6px,1vw,8px);color:rgba(184,146,42,.55);text-align:center}
+.tc-body.flipped{border-color:var(--g);box-shadow:0 0 20px rgba(184,146,42,.35)}
+
+/* RESULT */
+.res-cards{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.rc{width:62px;text-align:center}
+.rc-img{width:62px;height:104px;border-radius:5px;border:1px solid var(--g);background:linear-gradient(165deg,#1c0d28 0%,#080e1c 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;font-size:20px;padding:4px;box-shadow:0 0 12px rgba(184,146,42,.22);margin-bottom:5px}
+.rc-img .rn{font-size:7px;color:var(--gl);text-align:center;line-height:1.3}
+.rc-pos{font-size:9px;color:var(--g)}
+
+.read-box{background:rgba(7,3,9,.78);border:1px solid rgba(184,146,42,.16);border-left:3px solid var(--g);border-radius:4px;padding:22px 20px;line-height:1.95;font-size:15px;min-height:100px;font-family:var(--f3);position:relative}
+.tcur{display:inline-block;width:2px;height:15px;background:var(--g);margin-left:2px;animation:bc .75s step-end infinite;vertical-align:middle}
+@keyframes bc{50%{opacity:0}}
+
+/* LIVE BOX */
+.live-box{
+  margin-top:28px;
+  background:linear-gradient(135deg,rgba(58,12,26,.72) 0%,rgba(34,10,53,.52) 100%);
+  border:1px solid rgba(184,146,42,.3);border-radius:6px;
+  padding:clamp(20px,4vw,32px) clamp(16px,4vw,28px);
+  text-align:center;position:relative;overflow:hidden;
+}
+.live-box::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(184,146,42,.015) 40px,rgba(184,146,42,.015) 41px);pointer-events:none}
+.live-badge{display:inline-block;background:rgba(220,50,50,.2);border:1px solid rgba(220,80,80,.5);color:#f09090;font-size:11px;font-weight:700;padding:4px 12px;border-radius:50px;letter-spacing:1px;margin-bottom:12px;animation:lp 1.6s ease-in-out infinite}
+@keyframes lp{0%,100%{box-shadow:0 0 0 rgba(220,50,50,0)}50%{box-shadow:0 0 10px rgba(220,50,50,.4)}}
+.live-title{font-family:var(--f1);font-size:clamp(14px,2.5vw,19px);color:var(--gl);margin-bottom:8px}
+.live-desc{font-size:13px;color:rgba(232,213,176,.55);line-height:1.85;margin-bottom:18px}
+
+/* Package */
+.pkg-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.pkg{padding:14px 18px;border:1px solid rgba(184,146,42,.25);background:rgba(58,12,26,.25);border-radius:5px;text-align:center;cursor:pointer;transition:all .26s;min-width:100px}
+.pkg:hover,.pkg.on{border-color:var(--g);background:rgba(184,146,42,.13);box-shadow:0 0 14px rgba(184,146,42,.2)}
+.pkg .pamt{font-family:var(--f1);font-size:20px;color:var(--gl)}
+.pkg .pdur{font-size:11px;color:rgba(232,213,176,.5);margin-top:3px}
+.pkg .pop{font-size:9px;color:var(--g);font-weight:700;letter-spacing:.5px}
+
+.live-feats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;text-align:left}
+.lf{font-size:12px;color:rgba(232,213,176,.6);display:flex;align-items:center;gap:6px}
+.lf::before{content:'✦';color:var(--g);font-size:9px;flex-shrink:0}
+
+.line-live-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#06C755;color:#fff;border:none;
+  padding:15px 32px;border-radius:50px;font-size:17px;
+  font-family:var(--f2);font-weight:700;cursor:pointer;
+  text-decoration:none;transition:all .3s;
+  box-shadow:0 6px 22px rgba(6,199,85,.35);
+}
+.line-live-btn:hover{background:#05b04c;transform:scale(1.05);box-shadow:0 8px 28px rgba(6,199,85,.5)}
+.line-live-btn .lic{font-size:22px}
+
+/* HOME STRIPS */
+.istrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:24px 0}
+.ic{border:1px solid rgba(184,146,42,.14);border-radius:5px;padding:18px 14px;background:rgba(34,10,53,.3);text-align:center}
+.ic-num{font-family:var(--f1);font-size:22px;color:var(--g);margin-bottom:6px}
+.ic-txt{font-size:13px;color:rgba(232,213,176,.55);line-height:1.65}
+.green{color:#4caf82;font-weight:700}
+.red{color:#e88080;font-weight:700}
+
+/* LOADING */
+#load{position:fixed;inset:0;background:rgba(7,3,9,.93);z-index:300;display:none;align-items:center;justify-content:center;flex-direction:column;gap:18px;backdrop-filter:blur(8px)}
+#load.on{display:flex}
+.lorb{font-size:64px;animation:ls 2.5s linear infinite}
+@keyframes ls{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.ltxt{font-family:var(--f1);color:var(--gl);font-size:17px;text-align:center;animation:la 1.6s ease-in-out infinite}
+@keyframes la{0%,100%{opacity:.45}50%{opacity:1}}
+.lsub{font-size:13px;color:rgba(232,213,176,.4)}
+
+/* TOAST */
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:rgba(58,12,26,.97);border:1px solid var(--g);color:var(--gl);padding:11px 22px;border-radius:50px;font-size:14px;z-index:400;display:none;white-space:nowrap;max-width:90vw;text-align:center}
+#toast.on{display:block;animation:ti .3s ease}
+@keyframes ti{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+@media(max-width:480px){
+  .box{padding:20px 14px}
+  .qg{grid-template-columns:repeat(2,1fr)}
+  .sg{grid-template-columns:1fr 1fr}
+  .live-feats{grid-template-columns:1fr}
+  .pkg-row{gap:8px}
+  .pkg{min-width:88px;padding:12px 12px}
+}
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+<div class="candle cl"></div>
+<div class="candle cr2"></div>
+<div id="load">
+  <div class="lorb">🔮</div>
+  <div class="ltxt" id="ltxt">กำลังอ่านดวง...</div>
+  <div class="lsub" id="lsub"></div>
+</div>
+<div id="toast"></div>
+
+<!-- ══════════ HEADER ══════════ -->
+<header>
+  <div class="hgems">✦ ✦ ✦</div>
+  <div class="htitle">คุณนายโยคิ</div>
+  <div class="hsub">✧ Khun Nai Yogi · Mystic Tarot Divination ✧</div>
+  <div class="hline-wrap">
+    <a class="hline-btn" id="lineHeaderBtn" href="https://line.me/ti/p/@khunnaiyogi" target="_blank">
+      <span style="font-size:18px">💬</span> LINE: @khunnaiyogi
+    </a>
+  </div>
+</header>
+
+<!-- ══════════ MAIN ══════════ -->
+<main>
+
+<!-- HOME -->
+<div class="sc on" id="scHome">
+  <div class="box">
+    <span class="cx tl">✦</span><span class="cx tr">✦</span>
+    <span class="cx bl">✦</span><span class="cx br">✦</span>
+    <div class="ptitle">✦ ยินดีต้อนรับสู่โลกของคุณนายโยคิ ✦</div>
+    <div class="psub">เปิดไพ่ฟรีทุกใบ · AI อ่านดวงฟรี · ดูสดพิเศษผ่าน LINE</div>
+    <div class="istrip">
+      <div class="ic"><div class="ic-num">①</div><div class="ic-txt">เลือกหมวดและพิมพ์คำถาม</div></div>
+      <div class="ic"><div class="ic-num">②</div><div class="ic-txt"><span class="green">เปิดไพ่ฟรี</span><br>3 – 5 ใบ</div></div>
+      <div class="ic"><div class="ic-num">③</div><div class="ic-txt">AI คุณนายโยคิ<br><span class="green">ทำนายฟรี</span></div></div>
+      <div class="ic"><div class="ic-num">④</div><div class="ic-txt">ต้องการ <span class="red">ดูสด</span><br>นัดผ่าน LINE</div></div>
+    </div>
+    <div class="brow">
+      <button class="btn btn-r" onclick="show('scQ')">🔮 เริ่มดูดวงฟรี →</button>
+      <a class="btn btn-g" id="homeLiveBtn" href="https://line.me/ti/p/@khunnaiyogi" target="_blank">💬 นัดดูสดทาง LINE</a>
+    </div>
+  </div>
+</div>
+
+<!-- QUESTION -->
+<div class="sc" id="scQ">
+  <div class="box">
+    <span class="cx tl">✦</span><span class="cx tr">✦</span>
+    <span class="cx bl">✦</span><span class="cx br">✦</span>
+    <div class="ptitle">✦ ถามดวงชะตา ✦</div>
+    <div class="psub">เลือกหมวดหมู่ แล้วพิมพ์คำถามของคุณ</div>
+    <div class="qg">
+      <button class="qb on" onclick="setType(this,'love')"><span class="qi">💕</span>ความรัก</button>
+      <button class="qb" onclick="setType(this,'work')"><span class="qi">💼</span>การงาน</button>
+      <button class="qb" onclick="setType(this,'money')"><span class="qi">💰</span>การเงิน</button>
+      <button class="qb" onclick="setType(this,'health')"><span class="qi">🌿</span>สุขภาพ</button>
+      <button class="qb" onclick="setType(this,'luck')"><span class="qi">🌟</span>โชคลาภ</button>
+      <button class="qb" onclick="setType(this,'general')"><span class="qi">🔮</span>ทั่วไป</button>
+    </div>
+    <textarea class="qin" id="qin" placeholder="เขียนคำถามของคุณที่นี่... เช่น 'ความสัมพันธ์ของฉันจะเป็นอย่างไร?' หรือ 'การงานในช่วงนี้ดีไหม?'"></textarea>
+    <div class="orn">จำนวนไพ่ที่ต้องการ</div>
+    <div class="sg">
+      <button class="sb" onclick="setSpread(this,3)">
+        <div class="sn">3 ใบ</div>
+        <div class="sc2">อดีต · ปัจจุบัน · อนาคต</div>
+      </button>
+      <button class="sb on" onclick="setSpread(this,4)">
+        <div class="sn">4 ใบ</div>
+        <div class="sc2">+ ผลลัพธ์</div>
+      </button>
+      <button class="sb" onclick="setSpread(this,5)">
+        <div class="sn">5 ใบ</div>
+        <div class="sc2">วิเคราะห์ครบ</div>
+      </button>
+    </div>
+    <div class="brow">
+      <button class="btn" onclick="show('scHome')">← กลับ</button>
+      <button class="btn btn-r" onclick="goCards()">จั่วไพ่ →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div class="sc" id="scCards">
+  <div class="box">
+    <span class="cx tl">✦</span><span class="cx tr">✦</span>
+    <span class="cx bl">✦</span><span class="cx br">✦</span>
+    <div class="ptitle" id="cTitle">✦ เปิดไพ่ ✦</div>
+    <div class="psub" id="cSub">คลิกที่ไพ่แต่ละใบเพื่อเปิดเผยชะตา · ฟรีทุกใบ ✨</div>
+    <div class="cards-row" id="cRow"></div>
+    <div id="cHint" style="text-align:center;font-size:13px;color:rgba(232,213,176,.38);margin-bottom:14px;min-height:20px"></div>
+    <div class="brow">
+      <button class="btn" onclick="show('scQ')">← ถามใหม่</button>
+      <button class="btn btn-r" id="readBtn" disabled onclick="doRead()">🔮 ขอคำทำนาย</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div class="sc" id="scRes">
+  <div class="box">
+    <span class="cx tl">✦</span><span class="cx tr">✦</span>
+    <span class="cx bl">✦</span><span class="cx br">✦</span>
+    <div class="ptitle">✦ คำทำนายของคุณนายโยคิ ✦</div>
+    <div id="resCards" class="res-cards"></div>
+    <div class="orn">✦ คำทำนาย ✦</div>
+    <div class="read-box" id="readBox"><span class="tcur"></span></div>
+
+    <!-- LIVE CTA -->
+    <div class="live-box">
+      <div class="live-badge">🔴 LIVE READING</div>
+      <div class="live-title">ดูดวงสดกับคุณนายโยคิ</div>
+      <div class="live-desc">
+        พูดคุยแบบ 1:1 ทาง LINE · ถามได้ไม่จำกัด<br>
+        คุณนายโยคิอ่านดวงด้วยพลังงานจริง ลึกกว่า AI
+      </div>
+      <div class="pkg-row">
+        <div class="pkg on" onclick="setPkg(this,299,'30 นาที')">
+          <div class="pamt">฿299</div>
+          <div class="pdur">30 นาที</div>
+        </div>
+        <div class="pkg" onclick="setPkg(this,499,'60 นาที')">
+          <div class="pop">★ แนะนำ</div>
+          <div class="pamt">฿499</div>
+          <div class="pdur">60 นาที</div>
+        </div>
+        <div class="pkg" onclick="setPkg(this,899,'ไม่จำกัด')">
+          <div class="pamt">฿899</div>
+          <div class="pdur">ไม่จำกัดเวลา</div>
+        </div>
+      </div>
+      <div class="live-feats">
+        <div class="lf">คุยสดแบบ 1:1</div>
+        <div class="lf">ถามได้ไม่จำกัด</div>
+        <div class="lf">ไพ่ + ลูกแก้ว + ดวงดาว</div>
+        <div class="lf">เริ่มภายใน 15 นาที</div>
+      </div>
+      <a class="line-live-btn" href="#" id="lineLiveBtn" target="_blank">
+        <span class="lic">💬</span>
+        <span id="liveBtnTxt">นัดดูสด ฿299 · 30 นาที ทาง LINE →</span>
+      </a>
+    </div>
+
+    <div class="brow">
+      <button class="btn" onclick="reset()">🔄 ดูดวงรอบใหม่</button>
+      <a class="btn btn-g" id="resLineBtn" href="https://line.me/ti/p/@khunnaiyogi" target="_blank">💬 LINE คุณนายโยคิ</a>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+/* ─── STARS ─── */
+(()=>{
+  const sf=document.getElementById('stars');
+  for(let i=0;i<70;i++){
+    const s=document.createElement('div');s.className='s';
+    const z=Math.random()*2+.4;
+    s.style.cssText=`width:${z}px;height:${z}px;left:${Math.random()*
