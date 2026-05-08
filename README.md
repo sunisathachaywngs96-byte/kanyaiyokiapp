@@ -1,1 +1,1 @@
-# kunyai-yogi-app
+# kunyaiyogiapp
