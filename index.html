@@ -371,3 +371,161 @@ main{position:relative;z-index:5;max-width:940px;margin:0 auto;padding:36px 16px
     const s=document.createElement('div');s.className='s';
     const z=Math.random()*2+.4;
     s.style.cssText=`width:${z}px;height:${z}px;left:${Math.random()*
+100}%;top:${Math.random()*100}%;opacity:${Math.random()};--d:${2+Math.random()*4}s;--dl:${Math.random()*3}s`;
+    sf.appendChild(s);
+  }
+})();
+
+/* ─── STATE ─── */
+let qType='love';
+let spread=4;
+let opened=0;
+let selectedPkg={price:299,duration:'30 นาที'};
+let drawn=[];
+
+const cards=[
+['The Fool','🃏'],['The Magician','✨'],['The High Priestess','🌙'],
+['The Empress','👑'],['The Emperor','⚔️'],['The Lovers','💕'],
+['The Chariot','🏇'],['Strength','🦁'],['The Hermit','🕯️'],
+['Wheel of Fortune','🎡'],['Justice','⚖️'],['The Star','⭐'],
+['The Moon','🌑'],['The Sun','☀️'],['Judgement','📯'],
+['The World','🌍']
+];
+
+/* ─── HELPERS ─── */
+function $(id){return document.getElementById(id)}
+
+function toast(t){
+  const el=$('toast');
+  el.textContent=t;
+  el.classList.add('on');
+  setTimeout(()=>el.classList.remove('on'),2200);
+}
+
+function show(id){
+  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
+  $(id).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function setType(el,t){
+  qType=t;
+  document.querySelectorAll('.qb').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function setSpread(el,n){
+  spread=n;
+  document.querySelectorAll('.sb').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function setPkg(el,p,d){
+  selectedPkg={price:p,duration:d};
+  document.querySelectorAll('.pkg').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+  $('liveBtnTxt').textContent=`นัดดูสด ฿${p} · ${d} ทาง LINE →`;
+}
+
+function goCards(){
+  const q=$('qin').value.trim();
+  if(!q){
+    toast('กรุณาพิมพ์คำถามก่อน');
+    return;
+  }
+
+  opened=0;
+  drawn=[];
+
+  const mix=[...cards].sort(()=>Math.random()-.5).slice(0,spread);
+
+  const posNames={
+    3:['อดีต','ปัจจุบัน','อนาคต'],
+    4:['อดีต','ปัจจุบัน','อุปสรรค','ผลลัพธ์'],
+    5:['ตัวคุณ','สถานการณ์','อุปสรรค','คำแนะนำ','อนาคต']
+  };
+
+  $('cRow').innerHTML='';
+
+  mix.forEach((c,i)=>{
+    drawn.push(c);
+
+    const wrap=document.createElement('div');
+    wrap.className='tc';
+
+    wrap.innerHTML=`
+      <div class="tc-pos">${posNames[spread][i]}</div>
+      <div class="tc-body" onclick="flip(this)">
+        <div class="tc-inner">
+          <div class="cb">
+            <div class="cb-pat">✦<br>🔮<br>✦</div>
+          </div>
+          <div class="cf">
+            <div class="em">${c[1]}</div>
+            <div class="cn">${c[0]}</div>
+            <div class="cn2">Tarot</div>
+          </div>
+        </div>
+      </div>
+    `;
+    $('cRow').appendChild(wrap);
+  });
+
+  $('readBtn').disabled=true;
+  $('cHint').textContent='เปิดไพ่ให้ครบทุกใบก่อน';
+  show('scCards');
+}
+
+function flip(el){
+  if(el.classList.contains('flipped')) return;
+  el.classList.add('flipped');
+  opened++;
+
+  if(opened>=spread){
+    $('readBtn').disabled=false;
+    $('cHint').textContent='ไพ่เปิดครบแล้ว ✨';
+  }else{
+    $('cHint').textContent=`เปิดแล้ว ${opened}/${spread} ใบ`;
+  }
+}
+
+function doRead(){
+  $('load').classList.add('on');
+
+  setTimeout(()=>{
+    $('load').classList.remove('on');
+
+    const txt=`ดวงของคุณในช่วงนี้มีพลังแห่งการเปลี่ยนแปลง ไพ่ที่เปิดเผยบ่งบอกถึงโอกาสใหม่ การตัดสินใจสำคัญ และเส้นทางที่กำลังเปิดออก หากตั้งใจและเชื่อมั่นในตัวเอง สิ่งที่หวังไว้มีแนวโน้มสำเร็จ โดยเฉพาะด้าน ${qType==='love'?'ความรัก':qType==='work'?'การงาน':qType==='money'?'การเงิน':'ชีวิตโดยรวม'} ✨`;
+
+    $('readBox').innerHTML=txt;
+
+    $('resCards').innerHTML='';
+    drawn.forEach(c=>{
+      const d=document.createElement('div');
+      d.className='rc';
+      d.innerHTML=`
+        <div class="rc-img">
+          <div>${c[1]}</div>
+          <div class="rn">${c[0]}</div>
+        </div>
+      `;
+      $('resCards').appendChild(d);
+    });
+
+    const lineMsg=`สวัสดีค่ะ คุณนายโยคิ 🔮 ฉันต้องการดูดวงสด แพ็กเกจ ฿${selectedPkg.price} (${selectedPkg.duration})`;
+
+    $('lineLiveBtn').href=
+      `https://line.me/ti/p/@khunnaiyogi`;
+
+    show('scRes');
+
+  },2200);
+}
+
+function reset(){
+  $('qin').value='';
+  show('scHome');
+}
+</script>
+</body>
+</html>
